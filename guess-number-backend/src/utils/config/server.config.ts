@@ -29,3 +29,18 @@ export enum PlayerTypes {
   HUMAN = 'human',
   CPU = 'cpu',
 }
+
+export const CPUPlayers = [
+  {
+    username: 'CPU 1',
+  },
+  {
+    username: 'CPU 2',
+  },
+  {
+    username: 'CPU 3',
+  },
+  {
+    username: 'CPU 4',
+  },
+];

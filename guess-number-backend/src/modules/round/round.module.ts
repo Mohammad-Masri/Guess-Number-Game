@@ -4,6 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ModuleNames } from 'src/utils/config/server.config';
 import { RoundService } from './round.service';
 import RoundSchema from './round.schema';
+import PlayerGuessSchema from '../player-guess/player-guess.schema';
+import { PlayerGuessService } from '../player-guess/player-guess.service';
 
 @Module({
   imports: [
@@ -12,9 +14,13 @@ import RoundSchema from './round.schema';
         name: ModuleNames.ROUND,
         schema: RoundSchema,
       },
+      {
+        name: ModuleNames.PLAYER_GUESS,
+        schema: PlayerGuessSchema,
+      },
     ]),
   ],
   controllers: [],
-  providers: [RoundService],
+  providers: [RoundService, PlayerGuessService],
 })
 export class RoundModule {}
