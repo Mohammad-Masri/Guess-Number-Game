@@ -10,6 +10,7 @@ import {
   DATABASE_PORT,
 } from './utils/config/server.config';
 import { PlayerModule } from './modules/player/player.module';
+import { GamePlayerModule } from './modules/game-player/game-player.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PlayerModule } from './modules/player/player.module';
     GameGatewayModule,
     GameModule,
     PlayerModule,
+    GamePlayerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

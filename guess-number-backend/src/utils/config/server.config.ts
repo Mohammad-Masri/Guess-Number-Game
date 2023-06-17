@@ -14,6 +14,7 @@ export const GLOBAL_URL_PREFIX = '/api';
 export enum ModuleNames {
   GAME = 'Game',
   PLAYER = 'Player',
+  GAME_PLAYER = 'Game_Player',
 }
 
 export const DATABASE_HOST = process.env.DATABASE_HOST;
