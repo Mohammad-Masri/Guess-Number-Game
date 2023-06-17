@@ -16,30 +16,39 @@ export default function RoundMenu() {
     <Grid
       container
       direction="row"
-      justifyContent="space-between"
+      justifyContent="flex-start"
       alignItems="flex-start"
-      style={{
-        height: "100%",
-      }}
+      spacing={1}
     >
-      <Grid xs={5.5}>
-        <NumberInput
-          label="Points"
-          id="points"
-          value={points}
-          setValue={setPoints}
-          stepAmount={25}
-        />
+      <Grid item xs={12}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
+          <Grid xs={5.5}>
+            <NumberInput
+              label="Points"
+              id="points"
+              value={points}
+              setValue={setPoints}
+              stepAmount={25}
+            />
+          </Grid>
+          <Grid xs={5.5}>
+            <NumberInput
+              label="Multiplier"
+              id="multiplier"
+              value={multiplier}
+              setValue={setMultiplier}
+              stepAmount={0.25}
+            />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid xs={5.5}>
-        <NumberInput
-          label="Multiplier"
-          id="multiplier"
-          value={multiplier}
-          setValue={setMultiplier}
-          stepAmount={0.25}
-        />
-      </Grid>
+
       <Grid xs={12}>
         <MyButton label="Start" onClick={handleClickStartButton} />
       </Grid>

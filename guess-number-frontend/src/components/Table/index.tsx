@@ -19,6 +19,7 @@ export interface TableColumn {
 interface Props {
   columns: TableColumn[];
   rows: any[];
+  maxHeight?: number;
   showPaginationOptions?: boolean;
 }
 
@@ -26,6 +27,7 @@ export default function Table({
   columns,
   rows = [],
   showPaginationOptions = false,
+  maxHeight = 250,
 }: Props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -48,8 +50,8 @@ export default function Table({
         overflow: "hidden",
       }}
     >
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <MaterialTable stickyHeader>
+      <TableContainer sx={{ maxHeight }}>
+        <MaterialTable size="small">
           <TableHead>
             <TableRow>
               {columns.map((column) => (

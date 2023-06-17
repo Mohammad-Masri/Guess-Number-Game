@@ -11,7 +11,7 @@ enum WelcomeAndRoundMenuViews {
 
 export default function WelcomeCard() {
   const [view, setView] = useState<WelcomeAndRoundMenuViews>(
-    WelcomeAndRoundMenuViews.WELCOME
+    WelcomeAndRoundMenuViews.ROUND_MENU
   );
 
   return (
