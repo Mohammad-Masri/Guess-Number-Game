@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import RoundMenu from "../RoundMenu";
 import WelcomeForm from "../WelcomeForm";
-
-enum WelcomeAndRoundMenuViews {
-  WELCOME = "welcome",
-  ROUND_MENU = "round-menu",
-}
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectGameStatus,
+  setGameStatus,
+  setRoundStatus,
+} from "../../store/slices/GameSlice";
+import { GameStatuses, RoundStatuses } from "../../dto/Game";
 
 export default function WelcomeCard() {
-  const [view, setView] = useState<WelcomeAndRoundMenuViews>(
-    WelcomeAndRoundMenuViews.ROUND_MENU
-  );
+  const gameStatus = useSelector(selectGameStatus);
+  const dispatch = useDispatch();
 
   return (
     <>
-      {view == WelcomeAndRoundMenuViews.WELCOME ? (
+      {gameStatus == GameStatuses.PREPARING ? (
         <WelcomeForm
-          onClickAcceptButton={() =>
-            setView(WelcomeAndRoundMenuViews.ROUND_MENU)
-          }
+          onClickAcceptButton={() => {
+            dispatch(setGameStatus(GameStatuses.RUNNING));
+            dispatch(setRoundStatus(RoundStatuses.PREPARING));
+          }}
         />
       ) : (
         <RoundMenu />

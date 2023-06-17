@@ -1,6 +1,8 @@
 import React from "react";
 import { Grid, Slider } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRoundSpeed, setRoundSpeed } from "../../store/slices/GameSlice";
 
 interface SpeedSliderMark {
   value: number;
@@ -19,19 +21,19 @@ const generateSpeedSliderMarks = () => {
   return marks;
 };
 
-interface Props {
-  value: number;
-  setValue: (number: number) => void;
-}
+interface Props {}
 
-export default function SpeedSlider({ value, setValue }: Props) {
+export default function SpeedSlider({}: Props) {
   const marks = generateSpeedSliderMarks();
+
+  const roundSpeed = useSelector(selectRoundSpeed);
+  const dispatch = useDispatch();
 
   const handleSpeedValueChange = (
     event: Event,
     newValue: number | number[]
   ) => {
-    setValue(newValue as number);
+    dispatch(setRoundSpeed(newValue as number));
   };
   return (
     <Grid container justifyContent="flex-start" alignItems="flex-start">
@@ -65,7 +67,7 @@ export default function SpeedSlider({ value, setValue }: Props) {
           <Grid item xs={10}>
             <Slider
               // aria-label="Speed"
-              value={value}
+              value={roundSpeed}
               onChange={handleSpeedValueChange}
               // getAriaValueText={valuetext}
               // valueLabelDisplay="auto"

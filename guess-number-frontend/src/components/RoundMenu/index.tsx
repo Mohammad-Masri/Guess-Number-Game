@@ -4,13 +4,21 @@ import MyButton from "../MyButton";
 import NumberInput from "../NumberInput";
 import CurrentRoundCard from "../CurrentRoundCard";
 import SpeedSlider from "../SpeedSlider";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectRoundStatus,
+  setRoundStatus,
+} from "../../store/slices/GameSlice";
+import { RoundStatuses } from "../../dto/Game";
 export default function RoundMenu() {
   const [points, setPoints] = useState<number>(50);
   const [multiplier, setMultiplier] = useState<number>(1);
-  const [speedSliderValue, setSpeedSliderValue] = useState<number>(1);
+
+  const roundStatus = useSelector(selectRoundStatus);
+  const dispatch = useDispatch();
 
   const handleClickStartButton = () => {
-    console.log("start");
+    dispatch(setRoundStatus(RoundStatuses.RUNNING));
   };
   return (
     <Grid
@@ -48,13 +56,17 @@ export default function RoundMenu() {
       </Grid>
 
       <Grid xs={12}>
-        <MyButton label="Start" onClick={handleClickStartButton} />
+        <MyButton
+          label="Start"
+          onClick={handleClickStartButton}
+          isDisabled={roundStatus == RoundStatuses.RUNNING}
+        />
       </Grid>
       <Grid xs={12}>
         <CurrentRoundCard />
       </Grid>
       <Grid xs={12}>
-        <SpeedSlider value={speedSliderValue} setValue={setSpeedSliderValue} />
+        <SpeedSlider />
       </Grid>
     </Grid>
   );

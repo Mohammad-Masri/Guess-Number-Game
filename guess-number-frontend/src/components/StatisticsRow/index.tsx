@@ -14,8 +14,8 @@ export default function StatisticsRow() {
     <Grid
       container
       direction="row"
-      justifyContent="center"
-      alignItems="center"
+      justifyContent="flex-start"
+      alignItems="flex-start"
       spacing={5}
     >
       <Grid item xs={4}>

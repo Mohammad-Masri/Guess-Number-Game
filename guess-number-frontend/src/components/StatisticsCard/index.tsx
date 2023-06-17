@@ -16,6 +16,7 @@ export default function StatisticsCard({ icon, label }: Props) {
         background: "linear-gradient(to right, #15191e, #1f2530)",
         border: "1px solid rgba(255, 253, 253, 0.253)",
         borderRadius: 12,
+        height: 75,
       }}
     >
       <Grid item xs={2}>

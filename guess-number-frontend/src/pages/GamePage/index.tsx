@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import WelcomeCard from "../../components/WelcomeCard";
 import RankingTable from "../../components/RankingTable";
 import ChatCard from "../../components/ChatCard";
@@ -28,6 +28,7 @@ export default function GamePage() {
           direction="row"
           justifyContent="flex-start"
           alignItems="flex-start"
+          spacing={1}
         >
           <Grid item xs={12}>
             <StatisticsRow />
