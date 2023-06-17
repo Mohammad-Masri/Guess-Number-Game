@@ -4,14 +4,15 @@ import RankingTable from "../../components/RankingTable";
 import ChatCard from "../../components/ChatCard";
 import MultiplierChart from "../../components/MultiplierChart";
 import { Grid } from "@mui/material";
+import StatisticsRow from "../../components/StatisticsRow";
 
 export default function GamePage() {
   return (
     <Grid
       container
       direction="row"
-      justifyContent="center"
-      alignItems="center"
+      justifyContent="flex-start"
+      alignItems="flex-start"
       spacing={10}
       style={{
         padding: 100,
@@ -22,7 +23,19 @@ export default function GamePage() {
       </Grid>
 
       <Grid item xs={8}>
-        <MultiplierChart />
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+        >
+          <Grid item xs={12}>
+            <StatisticsRow />
+          </Grid>
+          <Grid item xs={12}>
+            <MultiplierChart />
+          </Grid>
+        </Grid>
       </Grid>
 
       <Grid item xs={6}>

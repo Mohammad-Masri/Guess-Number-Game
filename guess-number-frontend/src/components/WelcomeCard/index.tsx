@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Grid } from "@mui/material";
-import MyButton from "../MyButton";
 import RoundMenu from "../RoundMenu";
 import WelcomeForm from "../WelcomeForm";
 

@@ -18,17 +18,15 @@ export default function RoundMenu() {
       direction="row"
       justifyContent="flex-start"
       alignItems="flex-start"
-      spacing={1}
     >
-      <Grid item xs={12}>
+      <Grid item xs={12} style={{ marginBottom: 10 }}>
         <Grid
           container
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          spacing={2}
         >
-          <Grid xs={5.5}>
+          <Grid xs={5.7}>
             <NumberInput
               label="Points"
               id="points"
@@ -37,7 +35,7 @@ export default function RoundMenu() {
               stepAmount={25}
             />
           </Grid>
-          <Grid xs={5.5}>
+          <Grid xs={5.7}>
             <NumberInput
               label="Multiplier"
               id="multiplier"
