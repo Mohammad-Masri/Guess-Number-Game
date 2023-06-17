@@ -5,8 +5,11 @@ import ChatCard from "../../components/ChatCard";
 import MultiplierChart from "../../components/MultiplierChart";
 import { Grid } from "@mui/material";
 import StatisticsRow from "../../components/StatisticsRow";
+import { SocketHandler } from "../../config/socket";
+import { SERVER_URL } from "../../config/server";
 
 export default function GamePage() {
+  const socketHandler = new SocketHandler(SERVER_URL);
   return (
     <Grid
       container
