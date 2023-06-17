@@ -57,7 +57,7 @@ export class ApiGameController {
     type: Object,
   })
   async getGameDetails(@Param() params: GetGameDetailsParamsInput) {
-    const game = await this.gameService.findByGameId(params.game_id);
+    const game = await this.gameService.checkFindByGameId(params.game_id);
     const game_response = await this.gameService.makeGameResponse(game);
     return game_response;
   }

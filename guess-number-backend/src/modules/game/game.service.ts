@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModuleNames } from 'src/utils/config/server.config';
 import { Model } from 'mongoose';
@@ -30,6 +30,18 @@ export class GameService {
 
   async findByGameId(game_id: string) {
     return await this.findOne({ game_id });
+  }
+
+  async checkFindByGameId(game_id: string) {
+    const game = await this.findByGameId(game_id);
+
+    if (game == null) {
+      throw new HttpException(
+        `game with this game id ${game_id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return game;
   }
 
   async create(players: IPlayer[]) {
