@@ -13,6 +13,7 @@ import { PlayerModule } from './modules/player/player.module';
 import { GamePlayerModule } from './modules/game-player/game-player.module';
 import { PlayerGuessModule } from './modules/player-guess/player-guess.module';
 import { RoundModule } from './modules/round/round.module';
+import { MessageModule } from './modules/message/message.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RoundModule } from './modules/round/round.module';
     GamePlayerModule,
     PlayerGuessModule,
     RoundModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
