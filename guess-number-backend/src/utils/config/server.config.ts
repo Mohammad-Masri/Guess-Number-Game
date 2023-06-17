@@ -13,8 +13,15 @@ export const GLOBAL_URL_PREFIX = '/api';
 // DB
 export enum ModuleNames {
   GAME = 'Game',
+  PLAYER = 'Player',
 }
 
 export const DATABASE_HOST = process.env.DATABASE_HOST;
 export const DATABASE_PORT = Number(process.env.DATABASE_PORT);
 export const DATABASE_NAME = process.env.DATABASE_NAME;
+
+// Player
+export enum PlayerTypes {
+  HUMAN = 'human',
+  CPU = 'cpu',
+}
