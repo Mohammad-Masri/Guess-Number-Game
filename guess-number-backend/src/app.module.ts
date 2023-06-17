@@ -11,6 +11,8 @@ import {
 } from './utils/config/server.config';
 import { PlayerModule } from './modules/player/player.module';
 import { GamePlayerModule } from './modules/game-player/game-player.module';
+import { PlayerGuessModule } from './modules/player-guess/player-guess.module';
+import { RoundModule } from './modules/round/round.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { GamePlayerModule } from './modules/game-player/game-player.module';
     GameModule,
     PlayerModule,
     GamePlayerModule,
+    PlayerGuessModule,
+    RoundModule,
   ],
   controllers: [AppController],
   providers: [AppService],

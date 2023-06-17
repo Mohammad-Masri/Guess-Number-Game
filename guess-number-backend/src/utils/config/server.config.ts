@@ -15,6 +15,8 @@ export enum ModuleNames {
   GAME = 'Game',
   PLAYER = 'Player',
   GAME_PLAYER = 'Game_Player',
+  PLAYER_GUESS = 'Player_GUESS',
+  ROUND = 'Round',
 }
 
 export const DATABASE_HOST = process.env.DATABASE_HOST;
