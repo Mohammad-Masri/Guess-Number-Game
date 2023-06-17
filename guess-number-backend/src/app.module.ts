@@ -14,6 +14,7 @@ import { GamePlayerModule } from './modules/game-player/game-player.module';
 import { PlayerGuessModule } from './modules/player-guess/player-guess.module';
 import { RoundModule } from './modules/round/round.module';
 import { MessageModule } from './modules/message/message.module';
+import { ApiGameModule } from './apis/game/api-game.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { MessageModule } from './modules/message/message.module';
     PlayerGuessModule,
     RoundModule,
     MessageModule,
+    ApiGameModule,
   ],
   controllers: [AppController],
   providers: [AppService],
