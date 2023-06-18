@@ -95,6 +95,7 @@ export class GameService {
       );
 
     return new GameResponse(
+      game,
       you_player_response,
       current_round_response,
       players_result,

@@ -13,6 +13,8 @@ export enum RoundStatuses {
 }
 
 export interface GameResponse {
+  id: string;
+  game_id: string;
   you: YouPlayerResponse;
 
   current_round: RoundResponse;

@@ -1,16 +1,30 @@
 import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import MyButton from "../MyButton";
+import { useDispatch } from "react-redux";
+import { startNewGame } from "../../store/slices/GameSlice/actions";
+import { setGameStatus, setRoundStatus } from "../../store/slices/GameSlice";
+import { GameStatuses, RoundStatuses } from "../../dto/Game";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  onClickAcceptButton: () => void;
-}
+interface Props {}
 
-export default function WelcomeForm({ onClickAcceptButton }: Props) {
+export default function WelcomeForm({}: Props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [name, setName] = useState<string>("");
   const [acceptButtonEnabled, setAcceptButtonEnabled] = useState<boolean>(
     false
   );
+
+  const handleClickAcceptButton = () => {
+    startNewGame(dispatch, name, navigate, () => {
+      dispatch(setGameStatus(GameStatuses.RUNNING));
+      dispatch(setRoundStatus(RoundStatuses.PREPARING));
+      setName("");
+    });
+  };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
@@ -76,7 +90,7 @@ export default function WelcomeForm({ onClickAcceptButton }: Props) {
             <MyButton
               label="Accept"
               isDisabled={!acceptButtonEnabled}
-              onClick={onClickAcceptButton}
+              onClick={handleClickAcceptButton}
             />
           </Grid>
         </Grid>
