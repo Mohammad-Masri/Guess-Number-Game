@@ -29,7 +29,7 @@ export const startNewGame = (
     .then((res) => {
       dispatch(setGame(res.data));
       onSuccess();
-      navigate((res.data as GameResponse).game_id);
+      navigate(`/${(res.data as GameResponse).game_id}`, { replace: true });
     })
     .catch((error) => {
       handleServerError(error);
