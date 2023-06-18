@@ -1,32 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Grid } from "@mui/material";
-import { Message } from "../../dto/Message";
 import MessageItem from "../MessageItem";
-
-const getMessages = () => [
-  new Message("CPU 1", "Doing great"),
-  new Message("Mohammed", "What about you?", true),
-  new Message("Mohammed", "Good", true),
-  new Message("CPU 1", "How are you Mohammad?"),
-];
+import { useSelector } from "react-redux";
+import { selectMessages } from "../../store/slices/ChatSlice";
 
 export default function MessagesCard() {
-  const [messages, setMessages] = useState<Message[]>(getMessages().reverse());
-
   const [counter, setCounter] = useState<number>(1);
 
+  const messages = useSelector(selectMessages);
+  console.log("messages\n", messages);
   const chatContainerRef = useRef<any>(null);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log("send new random message");
-  //     const newMessage = new Message("Mohammed", counter + "", true);
-  //     setMessages([...messages, newMessage]);
-  //     setCounter(counter + 1);
-  //   }, 1000 * 5);
-
-  //   return () => clearInterval(interval);
-  // }, []);
 
   useEffect(() => {
     const chatContainer = chatContainerRef.current;

@@ -1,47 +1,57 @@
 import io, { Socket } from "socket.io-client";
+import { pushNewMessage } from "../../store/slices/ChatSlice";
+import { SendMessageInput } from "../../dto/Message";
 
-export enum SocketHandlerStatuses {
+export enum GameSocketEventNames {
   CONNECTED = "connected",
-  DISCONNECTED = "disconnected",
-  CONNECTING = "connecting",
+  DISCONNECT = "disconnect",
+  GAME_SOCKET_CONNECTED = "game-socket-connected",
+  SEND_MESSAGE = "send-message",
+  MESSAGE_SENDED = "message-send",
 }
 
 export class SocketHandler {
-  private status: SocketHandlerStatuses = SocketHandlerStatuses.DISCONNECTED;
   private url: string;
-  private dispatch: any;
+  private game_id: string;
+  private player_id: string;
   private clientSocket: Socket | null = null;
-  constructor(url: string) {
+  private dispatch: any;
+  constructor(url: string, game_id: string, player_id: string, dispatch: any) {
     this.url = url;
+    this.game_id = game_id;
+    this.player_id = player_id;
+    this.dispatch = dispatch;
     this.connect();
   }
 
-  public getStatus() {
-    return this.status;
-  }
-
   public connect() {
-    this.status = SocketHandlerStatuses.CONNECTING;
     this.clientSocket = io(this.url);
     this.makeListeners();
   }
 
-  public reconnect() {
-    console.log("trying reconnect ...");
-    this.connect();
-  }
-
   private makeListeners() {
     if (this.clientSocket != null) {
-      this.clientSocket.on("connected", () => {
-        console.log("socket connected in SocketHandler");
-        this.status = SocketHandlerStatuses.CONNECTED;
+      this.clientSocket.on(GameSocketEventNames.CONNECTED, () => {});
+      this.clientSocket.on(GameSocketEventNames.DISCONNECT, () => {});
+      this.clientSocket.on(
+        GameSocketEventNames.GAME_SOCKET_CONNECTED,
+        () => {}
+      );
+      this.clientSocket.on(GameSocketEventNames.MESSAGE_SENDED, (data) => {
+        console.log("message received\n", data);
+        this.dispatch(pushNewMessage(data));
       });
-      this.clientSocket.on("disconnect", () => {
-        this.status = SocketHandlerStatuses.DISCONNECTED;
-        console.log("socket disconnected in SocketHandler");
-        this.reconnect();
-      });
+    }
+  }
+
+  public sendNewMessageViaSocket(content: string) {
+    if (this.clientSocket != null) {
+      const newMessage = new SendMessageInput(
+        this.game_id,
+        this.player_id,
+        content
+      );
+      this.clientSocket.emit(GameSocketEventNames.SEND_MESSAGE, newMessage);
     }
   }
 }

@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
 import * as mongoose from 'mongoose';
-import { ModuleNames } from 'src/utils/config/server.config';
+import PlayerSchema from '../player/player.schema';
 
 const MessageSchema = new mongoose.Schema(
   {
     game_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: ModuleNames.GAME,
+      type: String,
+    },
+    player: {
+      type: PlayerSchema,
     },
     content: {
       type: String,

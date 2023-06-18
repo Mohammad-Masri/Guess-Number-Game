@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import MyButton from "../MyButton";
+import { socketHandler } from "../ChatCard";
 
 interface Props {
   messageText: string;
@@ -18,8 +19,10 @@ export default function MessageInput({ messageText, setMessageText }: Props) {
   };
 
   const handleClickSendButton = () => {
-    console.log("send");
-    setMessageText("");
+    if (socketHandler) {
+      socketHandler.sendNewMessageViaSocket(messageText);
+      setMessageText("");
+    }
   };
 
   return (

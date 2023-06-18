@@ -5,15 +5,12 @@ import ChatCard from "../../components/ChatCard";
 import MultiplierChart from "../../components/MultiplierChart";
 import { Grid } from "@mui/material";
 import StatisticsRow from "../../components/StatisticsRow";
-import { SocketHandler } from "../../config/socket";
-import { SERVER_URL } from "../../config/server";
 import { useParams } from "react-router-dom";
 import { fetchGameDetails } from "../../store/slices/GameSlice/actions";
 import { useDispatch } from "react-redux";
 
 export default function GamePage() {
   const params = useParams();
-  const socketHandler = new SocketHandler(SERVER_URL);
 
   const dispatch = useDispatch();
 
@@ -21,7 +18,7 @@ export default function GamePage() {
     if (params.id != null) {
       fetchGameDetails(dispatch, params.id);
     }
-  }, [params.id]);
+  }, [params.id, dispatch]);
 
   return (
     <Grid

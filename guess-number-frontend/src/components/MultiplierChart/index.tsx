@@ -7,14 +7,12 @@ import {
 } from "../../helpers/number";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectGame,
   selectRoundSpeed,
   selectRoundStatus,
   setRoundStatus,
 } from "../../store/slices/GameSlice";
 import { RoundStatuses } from "../../dto/Game";
-
-const roundMultiplierValue = getRandomNumberBetweenTwoNumber(1, 10);
-console.log("roundMultiplierValue: ", roundMultiplierValue);
 
 interface Point {
   X: number;
@@ -43,6 +41,13 @@ interface Props {}
 
 export default function MultiplierChart({}: Props) {
   const roundSpeed = useSelector(selectRoundSpeed);
+  const game = useSelector(selectGame);
+  const roundMultiplierValue =
+    game != null
+      ? game.current_round.round_multiplier != null
+        ? game.current_round.round_multiplier
+        : 0
+      : 0;
   const chartValues = generatePointsUntilReachThisXValue(roundMultiplierValue);
   const height = 600;
 

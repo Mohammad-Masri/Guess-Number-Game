@@ -1,13 +1,19 @@
-export class Message {
-  senderName: string;
-  messageText: string;
-  isYou: boolean;
-  createdAt: Date;
+export interface MessageResponse {
+  id: string;
+  sender_id: string;
+  sender_username: string;
+  content: string;
+  created_at: Date;
+}
 
-  constructor(senderName: string, messageText: string, isYou: boolean = false) {
-    this.messageText = messageText;
-    this.isYou = isYou;
-    this.senderName = isYou ? "You" : senderName;
-    this.createdAt = new Date();
+export class SendMessageInput {
+  game_id: string;
+  player_id: string;
+  content: string;
+
+  constructor(game_id: string, player_id: string, content: string) {
+    this.game_id = game_id;
+    this.player_id = player_id;
+    this.content = content;
   }
 }
