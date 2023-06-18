@@ -1,4 +1,4 @@
-import { YouPlayerResponse } from "../Player";
+import { PlayerResultInGameResponse, YouPlayerResponse } from "../Player";
 import { RoundResponse } from "../Round";
 
 export enum GameStatuses {
@@ -16,4 +16,6 @@ export interface GameResponse {
   you: YouPlayerResponse;
 
   current_round: RoundResponse;
+
+  players_result: PlayerResultInGameResponse[];
 }

@@ -7,4 +7,5 @@ export default interface IGamePlayer {
   player: IPlayer;
   rank: number;
   points: number;
+  score: number;
 }

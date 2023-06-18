@@ -13,6 +13,10 @@ const GamePlayerSchema = new mongoose.Schema(
     points: {
       type: Number,
     },
+    score: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true },
 );

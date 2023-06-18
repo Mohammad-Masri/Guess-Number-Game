@@ -18,3 +18,10 @@ export interface YouPlayerResponse {
   username: string;
   points: number;
 }
+
+export interface PlayerResultInGameResponse {
+  player: PlayerResponse;
+  rank: number;
+  points: number;
+  score: number;
+}

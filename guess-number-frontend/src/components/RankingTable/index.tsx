@@ -3,13 +3,18 @@ import { Grid } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import Table, { TableColumn } from "../Table";
 import { TotalResult } from "../../dto/TotalResult";
+import { useSelector } from "react-redux";
+import { selectGame } from "../../store/slices/GameSlice";
+import { PlayerResponse } from "../../dto/Player";
 export default function RankingTable() {
   const columns: TableColumn[] = [
     { id: "rank", label: "Rank" },
     {
-      id: "name",
+      id: "player",
       label: "Name",
-      align: "center",
+      cell: (value: PlayerResponse) => (
+        <>{value.is_you ? "You" : value.username}</>
+      ),
     },
     {
       id: "score",
@@ -18,13 +23,8 @@ export default function RankingTable() {
     },
   ];
 
-  const rows = [
-    new TotalResult(1, "Mohammed", null, true),
-    new TotalResult(2, "CPU 1", null, false),
-    new TotalResult(3, "CPU 2", null, false),
-    new TotalResult(4, "CPU 3", null, false),
-    new TotalResult(5, "CPU 4", null, false),
-  ];
+  const game = useSelector(selectGame);
+  const playersResult = game != null ? game.players_result : [];
 
   return (
     <Grid
@@ -51,7 +51,7 @@ export default function RankingTable() {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Table columns={columns} rows={rows} />
+        <Table columns={columns} rows={playersResult} />
       </Grid>
     </Grid>
   );
