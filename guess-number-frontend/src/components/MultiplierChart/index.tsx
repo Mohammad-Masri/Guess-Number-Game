@@ -56,8 +56,6 @@ export default function MultiplierChart({}: Props) {
   const dispatch = useDispatch();
   const roundStatus = useSelector(selectRoundStatus);
 
-  console.log("--- roundStatus : ", roundStatus);
-
   const currentMultiplierValueColor =
     roundStatus == RoundStatuses.FINISH ? "#F24C5E" : "#FFF";
   useEffect(() => {

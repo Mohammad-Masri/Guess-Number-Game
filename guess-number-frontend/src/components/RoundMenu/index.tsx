@@ -6,6 +6,7 @@ import CurrentRoundCard from "../CurrentRoundCard";
 import SpeedSlider from "../SpeedSlider";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectGame,
   selectRoundStatus,
   setRoundStatus,
 } from "../../store/slices/GameSlice";
@@ -15,9 +16,12 @@ import { startNewRound } from "../../store/slices/GameSlice/actions";
 export default function RoundMenu() {
   const params = useParams();
   const [points, setPoints] = useState<number>(50);
-  const [multiplier, setMultiplier] = useState<number>(1);
+  const [multiplier, setMultiplier] = useState<number>(2);
 
   const roundStatus = useSelector(selectRoundStatus);
+  const game = useSelector(selectGame);
+  const youPlayer = game != null ? game.you : null;
+
   const dispatch = useDispatch();
 
   const handleClickStartButton = () => {
@@ -46,6 +50,8 @@ export default function RoundMenu() {
               value={points}
               setValue={setPoints}
               stepAmount={25}
+              min={1}
+              max={youPlayer != null ? youPlayer.points : 1000}
             />
           </Grid>
           <Grid xs={5.7}>
@@ -55,6 +61,8 @@ export default function RoundMenu() {
               value={multiplier}
               setValue={setMultiplier}
               stepAmount={0.25}
+              min={2}
+              max={10}
             />
           </Grid>
         </Grid>

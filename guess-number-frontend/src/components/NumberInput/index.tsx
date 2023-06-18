@@ -9,27 +9,34 @@ interface Props {
   value: number;
   setValue: (number: number) => void;
   stepAmount: number;
+  min: number;
+  max: number;
 }
 export default function NumberInput({
   label,
   id,
   value,
+  min,
+  max,
   stepAmount,
   setValue,
 }: Props) {
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(Number(e.target.value));
+    const newValue = Number(e.target.value);
+    if (newValue >= min && newValue <= max) {
+      setValue(newValue);
+    }
   };
 
   const handleClickIncreaseButton = () => {
     const newValue = value + stepAmount;
-    if (newValue > 0) {
+    if (newValue >= min && newValue <= max) {
       setValue(newValue);
     }
   };
   const handleClickDecreaseButton = () => {
     const newValue = value - stepAmount;
-    if (newValue > 0) {
+    if (newValue >= min && newValue <= max) {
       setValue(newValue);
     }
   };
