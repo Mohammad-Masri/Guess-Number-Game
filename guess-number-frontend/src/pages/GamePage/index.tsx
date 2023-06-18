@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import WelcomeCard from "../../components/WelcomeCard";
 import RankingTable from "../../components/RankingTable";
 import ChatCard from "../../components/ChatCard";
@@ -7,9 +7,22 @@ import { Grid } from "@mui/material";
 import StatisticsRow from "../../components/StatisticsRow";
 import { SocketHandler } from "../../config/socket";
 import { SERVER_URL } from "../../config/server";
+import { useParams } from "react-router-dom";
+import { fetchGameDetails } from "../../store/slices/GameSlice/actions";
+import { useDispatch } from "react-redux";
 
 export default function GamePage() {
+  const params = useParams();
   const socketHandler = new SocketHandler(SERVER_URL);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (params.id != null) {
+      fetchGameDetails(dispatch, params.id);
+    }
+  }, [params.id]);
+
   return (
     <Grid
       container

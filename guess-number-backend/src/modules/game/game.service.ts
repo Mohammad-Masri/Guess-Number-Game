@@ -11,6 +11,7 @@ import { generateRandomString } from 'src/utils/helpers/string';
 import { PlayerService } from '../player/player.service';
 import { GameResponse } from './game.dto';
 import { RoundService } from '../round/round.service';
+import { ServerError } from 'src/utils/config/server-response.config';
 
 @Injectable()
 export class GameService {
@@ -36,9 +37,9 @@ export class GameService {
     const game = await this.findByGameId(game_id);
 
     if (game == null) {
-      throw new HttpException(
-        `game with this game id ${game_id} not found`,
+      throw new ServerError(
         HttpStatus.NOT_FOUND,
+        `game with this game id ${game_id} not found`,
       );
     }
     return game;

@@ -2,10 +2,16 @@ import React from "react";
 import { Grid } from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import Table, { TableColumn } from "../Table";
-import { RoundResult } from "../../dto/RoundResult";
+import { useSelector } from "react-redux";
+import { selectGame } from "../../store/slices/GameSlice";
+import { PlayerResponse } from "../../dto/Player";
 export default function CurrentRoundCard() {
   const columns: TableColumn[] = [
-    { id: "name", label: "Name" },
+    {
+      id: "player",
+      label: "Name",
+      cell: (value: PlayerResponse) => (value.is_you ? "You" : value.username),
+    },
     {
       id: "points",
       label: "Points",
@@ -18,13 +24,10 @@ export default function CurrentRoundCard() {
     },
   ];
 
-  const rows: RoundResult[] = [
-    new RoundResult("Mohammed", null, null, true),
-    new RoundResult("CPU 1", null, null),
-    new RoundResult("CPU 2", null, null),
-    new RoundResult("CPU 3", null, null),
-    new RoundResult("CPU 4", null, null),
-  ];
+  const game = useSelector(selectGame);
+
+  const currentRound = game != null ? game.current_round : null;
+  const roundResults = currentRound != null ? currentRound.round_results : [];
 
   return (
     <Grid container justifyContent="flex-start" alignItems="flex-start">
@@ -46,7 +49,7 @@ export default function CurrentRoundCard() {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Table columns={columns} rows={rows} />
+        <Table columns={columns} rows={roundResults} />
       </Grid>
     </Grid>
   );

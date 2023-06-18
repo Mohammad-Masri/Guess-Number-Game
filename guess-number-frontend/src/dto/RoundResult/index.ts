@@ -1,18 +1,8 @@
-export class RoundResult {
-  name: string | null;
-  points: number | null;
-  multiplier: number | null;
-  isYou: boolean;
+import { PlayerResponse } from "../Player";
 
-  constructor(
-    name: string | null,
-    points: number | null,
-    multiplier: number | null,
-    isYou: boolean = false
-  ) {
-    this.isYou = isYou;
-    this.name = isYou ? "You" : name;
-    this.points = points;
-    this.multiplier = multiplier;
-  }
+export interface RoundPlayerResultResponse {
+  player: PlayerResponse;
+  points: number | null;
+
+  multiplier: number | null;
 }

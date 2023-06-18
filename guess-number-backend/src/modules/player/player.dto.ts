@@ -6,11 +6,14 @@ import { PlayerTypes } from 'src/utils/config/server.config';
 
 export class YouPlayerResponse {
   @ApiProperty({ type: String })
+  id: string;
+  @ApiProperty({ type: String })
   username: string;
   @ApiProperty({ type: Number })
   points: number;
 
   constructor(game_player: IGamePlayer) {
+    this.id = game_player.player.id + '';
     this.username = game_player.player.username;
     this.points = game_player.points;
   }

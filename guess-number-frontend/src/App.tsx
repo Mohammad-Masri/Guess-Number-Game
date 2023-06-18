@@ -12,6 +12,9 @@ function App() {
         <Routes>
           <Route path="/" element={<GamePage />} />
         </Routes>
+        <Routes>
+          <Route path="/:id" element={<GamePage />} />
+        </Routes>
       </Router>
     </Provider>
   );

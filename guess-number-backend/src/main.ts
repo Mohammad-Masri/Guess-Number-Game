@@ -10,6 +10,8 @@ async function bootstrap() {
   app.setGlobalPrefix(GLOBAL_URL_PREFIX);
   app.useWebSocketAdapter(new SocketIoAdapter(app, true));
 
+  app.enableCors();
+
   const swagger_config = new DocumentBuilder()
     .setTitle('Guess Number Game API')
     .build();

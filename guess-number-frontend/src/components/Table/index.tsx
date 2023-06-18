@@ -13,7 +13,7 @@ export interface TableColumn {
   label: string;
   minWidth?: number;
   align?: "center" | "left" | "right" | "inherit" | "justify";
-  cell?: (value: any) => string;
+  cell?: (value: any) => React.ReactNode | string;
 }
 
 interface Props {

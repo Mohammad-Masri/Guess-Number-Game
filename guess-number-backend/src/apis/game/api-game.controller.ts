@@ -11,6 +11,7 @@ import { StartNewGameInput } from './dto/StartNewGame.dto';
 import { PlayerService } from 'src/modules/player/player.service';
 import { GetGameDetailsParamsInput } from './dto/GetGameDetails.dto';
 import { GameResponse } from 'src/modules/game/game.dto';
+import { ServerError } from 'src/utils/config/server-response.config';
 
 @Controller('game')
 @ApiTags('Game')
@@ -54,7 +55,7 @@ export class ApiGameController {
   })
   @ApiNotFoundResponse({
     description: 'game not found',
-    type: Object,
+    type: ServerError,
   })
   async getGameDetails(@Param() params: GetGameDetailsParamsInput) {
     const game = await this.gameService.checkFindByGameId(params.game_id);

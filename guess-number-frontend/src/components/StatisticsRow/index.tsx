@@ -4,12 +4,14 @@ import StatisticsCard from "../StatisticsCard";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Player } from "../../dto/Player";
 import { getCurrentTime, makeTimeFormat } from "../../helpers/moment";
-
-const currentPlayer = new Player("Mohammed", 1000);
+import { useSelector } from "react-redux";
+import { selectGame } from "../../store/slices/GameSlice";
 
 export default function StatisticsRow() {
+  const game = useSelector(selectGame);
+  const youPlayer = game != null ? game.you : null;
+
   return (
     <Grid
       container
@@ -20,13 +22,13 @@ export default function StatisticsRow() {
     >
       <Grid item xs={4}>
         <StatisticsCard
-          label={currentPlayer.points + ""}
+          label={youPlayer != null ? youPlayer.points + "" : ""}
           icon={<MilitaryTechIcon color="primary" fontSize="large" />}
         />
       </Grid>
       <Grid item xs={4}>
         <StatisticsCard
-          label={currentPlayer.name}
+          label={youPlayer != null ? youPlayer.username : ""}
           icon={<PersonIcon color="primary" fontSize="large" />}
         />
       </Grid>
