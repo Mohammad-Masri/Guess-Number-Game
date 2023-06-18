@@ -1,13 +1,17 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ModuleNames } from 'src/utils/config/server.config';
+import {
+  ModuleNames,
+  PlayerGuessStatuses,
+} from 'src/utils/config/server.config';
 import { Model } from 'mongoose';
 import IRound from './round.interface';
 import IGame from '../game/game.interface';
 import { RoundPlayerResultResponse, RoundResponse } from './round.dto';
 import { PlayerResponse } from '../player/player.dto';
 import { PlayerGuessService } from '../player-guess/player-guess.service';
+import IPlayerGuess from '../player-guess/player-guess.interface';
 
 @Injectable()
 export class RoundService {
@@ -32,14 +36,31 @@ export class RoundService {
         player,
       );
       let points = null,
-        multiplier = null;
+        multiplier = null,
+        status = null,
+        score = null;
       if (player_guess) {
         points = player_guess.points;
-        multiplier = player_guess.points;
+        multiplier = player_guess.multiplier;
+        status =
+          multiplier > round.round_multiplier
+            ? PlayerGuessStatuses.LOSE
+            : PlayerGuessStatuses.WIN;
+
+        score =
+          status == PlayerGuessStatuses.WIN
+            ? Number((multiplier * points).toFixed(2))
+            : 0;
       }
-      return new RoundPlayerResultResponse(player, multiplier, points);
+      return new RoundPlayerResultResponse(
+        player,
+        multiplier,
+        points,
+        status,
+        score,
+      );
     }
-    return new RoundPlayerResultResponse(player, null, null);
+    return new RoundPlayerResultResponse(player, null, null, null, null);
   }
 
   async makeRoundPlayersResultResponse(
@@ -64,5 +85,14 @@ export class RoundService {
       players,
     );
     return new RoundResponse(round, round_results);
+  }
+
+  async create(player_guesses: IPlayerGuess[], round_multiplier: number) {
+    const new_round = new this.RoundModel({
+      player_guesses,
+      round_multiplier,
+    });
+
+    return new_round;
   }
 }

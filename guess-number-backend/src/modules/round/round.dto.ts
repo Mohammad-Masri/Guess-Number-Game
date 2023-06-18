@@ -2,6 +2,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import IRound from './round.interface';
 import { PlayerResponse } from '../player/player.dto';
+import { PlayerGuessStatuses } from 'src/utils/config/server.config';
 
 export class RoundPlayerResultResponse {
   @ApiProperty({ type: PlayerResponse })
@@ -12,15 +13,23 @@ export class RoundPlayerResultResponse {
 
   @ApiProperty({ type: Number, nullable: true })
   points: number | null;
+  @ApiProperty({ enum: PlayerGuessStatuses, nullable: true })
+  status: PlayerGuessStatuses | null;
+  @ApiProperty({ type: Number, nullable: true })
+  score: number | null;
 
   constructor(
     player: PlayerResponse,
     multiplier: number | null,
     points: number | null,
+    status: PlayerGuessStatuses | null,
+    score: number | null,
   ) {
     this.player = player;
     this.multiplier = multiplier;
     this.points = points;
+    this.status = status;
+    this.score = score;
   }
 }
 

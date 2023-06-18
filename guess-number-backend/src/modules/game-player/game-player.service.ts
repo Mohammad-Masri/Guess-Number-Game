@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModuleNames, PlayerTypes } from 'src/utils/config/server.config';
 import { Model } from 'mongoose';
@@ -8,6 +8,7 @@ import IPlayer from '../player/player.interface';
 import IGame from '../game/game.interface';
 import { PlayerResponse } from '../player/player.dto';
 import { PlayerResultInGameResponse } from './game-player.dto';
+import { ServerError } from 'src/utils/config/server-response.config';
 
 @Injectable()
 export class GamePlayerService {
@@ -28,6 +29,13 @@ export class GamePlayerService {
   async getHumanPlayerInGame(game: IGame) {
     const player = game.players.find((p) => p.player.type == PlayerTypes.HUMAN);
     return player;
+  }
+
+  async getCPUPlayersInGame(game: IGame) {
+    const players = game.players.filter(
+      (p) => p.player.type == PlayerTypes.CPU,
+    );
+    return players;
   }
 
   async makePlayerResultInGameResponse(game: IGame, player: PlayerResponse) {
@@ -57,5 +65,14 @@ export class GamePlayerService {
       }
     }
     return game_players_result;
+  }
+
+  async checkPlayerHasPoints(game_player: IGamePlayer, points: number) {
+    if (game_player.points < points) {
+      throw new ServerError(
+        HttpStatus.BAD_REQUEST,
+        `you don't have ${points} points, your points is ${game_player.points}`,
+      );
+    }
   }
 }

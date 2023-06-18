@@ -44,3 +44,13 @@ export const CPUPlayers = [
     username: 'CPU 4',
   },
 ];
+
+export enum MultiplierValues {
+  MIN = 1,
+  MAX = 10,
+}
+
+export enum PlayerGuessStatuses {
+  WIN = 'win',
+  LOSE = 'lose',
+}

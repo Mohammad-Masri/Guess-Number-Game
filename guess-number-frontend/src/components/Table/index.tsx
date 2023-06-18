@@ -13,7 +13,7 @@ export interface TableColumn {
   label: string;
   minWidth?: number;
   align?: "center" | "left" | "right" | "inherit" | "justify";
-  cell?: (value: any) => React.ReactNode | string;
+  cell?: (value: any, row: any) => React.ReactNode | string;
 }
 
 interface Props {
@@ -76,7 +76,7 @@ export default function Table({
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.cell != null ? (
-                            column.cell(value)
+                            column.cell(value, row)
                           ) : value == null ? (
                             <>-</>
                           ) : (

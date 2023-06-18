@@ -3,28 +3,64 @@ import { Grid } from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import Table, { TableColumn } from "../Table";
 import { useSelector } from "react-redux";
-import { selectGame } from "../../store/slices/GameSlice";
+import { selectGame, selectRoundStatus } from "../../store/slices/GameSlice";
 import { PlayerResponse } from "../../dto/Player";
+import {
+  PlayerGuessStatuses,
+  RoundPlayerResultResponse,
+} from "../../dto/RoundResult";
+import { RoundStatuses } from "../../dto/Game";
+
+const getRowColor = (row: RoundPlayerResultResponse) => {
+  let color = "#000";
+  switch (row.status) {
+    case PlayerGuessStatuses.WIN: {
+      color = "#44ed15";
+      break;
+    }
+    case PlayerGuessStatuses.LOSE: {
+      color = "red";
+      break;
+    }
+    default:
+      break;
+  }
+  return color;
+};
+
 export default function CurrentRoundCard() {
+  const game = useSelector(selectGame);
+  const roundStatus = useSelector(selectRoundStatus);
+
+  console.log("roundStatus: ", roundStatus);
+
   const columns: TableColumn[] = [
     {
       id: "player",
       label: "Name",
-      cell: (value: PlayerResponse) => (value.is_you ? "You" : value.username),
+      cell: (value: PlayerResponse, row: RoundPlayerResultResponse) => (
+        <div style={{ color: getRowColor(row) }}>
+          {value.is_you ? "You" : value.username}
+        </div>
+      ),
     },
     {
       id: "points",
       label: "Points",
-      align: "center",
+      cell: (value: number, row: RoundPlayerResultResponse) => (
+        <div style={{ color: getRowColor(row) }}>
+          {roundStatus == RoundStatuses.RUNNING ? value : row.score}
+        </div>
+      ),
     },
     {
       id: "multiplier",
       label: "Multiplier",
-      align: "center",
+      cell: (value: number, row: RoundPlayerResultResponse) => (
+        <div style={{ color: getRowColor(row) }}>{value}</div>
+      ),
     },
   ];
-
-  const game = useSelector(selectGame);
 
   const currentRound = game != null ? game.current_round : null;
   const roundResults = currentRound != null ? currentRound.round_results : [];

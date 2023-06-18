@@ -26,7 +26,7 @@ export class GameResponse {
     current_round: RoundResponse,
     players_result: PlayerResultInGameResponse[],
   ) {
-    this.id = game.id;
+    this.id = game.id + '';
     this.game_id = game.game_id;
     this.you = you;
     this.current_round = current_round;

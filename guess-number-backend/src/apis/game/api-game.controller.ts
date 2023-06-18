@@ -12,6 +12,11 @@ import { PlayerService } from 'src/modules/player/player.service';
 import { GetGameDetailsParamsInput } from './dto/GetGameDetails.dto';
 import { GameResponse } from 'src/modules/game/game.dto';
 import { ServerError } from 'src/utils/config/server-response.config';
+import {
+  StartNewRoundInput,
+  StartNewRoundParamsInput,
+} from './dto/StartNewRound.dto';
+import { GamePlayerService } from 'src/modules/game-player/game-player.service';
 
 @Controller('game')
 @ApiTags('Game')
@@ -19,6 +24,7 @@ export class ApiGameController {
   constructor(
     private readonly gameService: GameService,
     private readonly playerService: PlayerService,
+    private readonly gamePlayerService: GamePlayerService,
   ) {}
 
   @Post('/')
@@ -60,6 +66,37 @@ export class ApiGameController {
   async getGameDetails(@Param() params: GetGameDetailsParamsInput) {
     const game = await this.gameService.checkFindByGameId(params.game_id);
     const game_response = await this.gameService.makeGameResponse(game);
+    return game_response;
+  }
+
+  @Post('/:game_id/round')
+  @ApiOperation({
+    summary: 'start new round',
+    description: '',
+  })
+  @ApiOkResponse({
+    description: 'start new round success',
+    type: GameResponse,
+  })
+  async startNewRound(
+    @Param() params: StartNewRoundParamsInput,
+    @Body() body: StartNewRoundInput,
+  ) {
+    let game: any = await this.gameService.checkFindByGameId(params.game_id);
+
+    const human_game_player = await this.gamePlayerService.getHumanPlayerInGame(
+      game,
+    );
+
+    game = await this.gameService.startNewGameRound(
+      game,
+      human_game_player,
+      body.points,
+      body.multiplier,
+    );
+
+    const game_response = await this.gameService.makeGameResponse(game);
+
     return game_response;
   }
 }

@@ -22,8 +22,8 @@ export class PlayerResultInGameResponse {
 
     if (game_player != null) {
       this.rank = game_player.rank;
-      this.points = game_player.points;
-      this.score = game_player.score;
+      this.points = Number(game_player.points.toFixed(2));
+      this.score = Number(game_player.score.toFixed(2));
     }
   }
 }
