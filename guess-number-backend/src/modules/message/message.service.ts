@@ -14,6 +14,9 @@ export class MessageService {
     private readonly MessageModel: Model<IMessage>,
   ) {}
 
+  async findAllInGame(game_id: string) {
+    return await this.MessageModel.find({ game_id }).sort({ createdAt: -1 });
+  }
   async create(
     player: IPlayer | null,
     game_id: string,
@@ -35,5 +38,16 @@ export class MessageService {
 
   async makeMessageResponse(message: IMessage) {
     return new MessageResponse(message);
+  }
+
+  async makeMessagesResponse(messages: IMessage[]) {
+    const messages_response: MessageResponse[] = [];
+
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      const message_response = await this.makeMessageResponse(message);
+      messages_response.push(message_response);
+    }
+    return messages_response;
   }
 }

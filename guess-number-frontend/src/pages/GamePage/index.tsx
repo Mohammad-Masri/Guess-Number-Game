@@ -8,6 +8,7 @@ import StatisticsRow from "../../components/StatisticsRow";
 import { useParams } from "react-router-dom";
 import { fetchGameDetails } from "../../store/slices/GameSlice/actions";
 import { useDispatch } from "react-redux";
+import { fetchMessages } from "../../store/slices/ChatSlice/actions";
 
 export default function GamePage() {
   const params = useParams();
@@ -17,6 +18,7 @@ export default function GamePage() {
   useEffect(() => {
     if (params.id != null) {
       fetchGameDetails(dispatch, params.id);
+      fetchMessages(dispatch, params.id);
     }
   }, [params.id, dispatch]);
 

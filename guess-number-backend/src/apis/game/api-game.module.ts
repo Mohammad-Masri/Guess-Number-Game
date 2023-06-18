@@ -13,6 +13,8 @@ import RoundSchema from 'src/modules/round/round.schema';
 import { RoundService } from 'src/modules/round/round.service';
 import PlayerGuessSchema from 'src/modules/player-guess/player-guess.schema';
 import { PlayerGuessService } from 'src/modules/player-guess/player-guess.service';
+import { MessageService } from 'src/modules/message/message.service';
+import MessageSchema from 'src/modules/message/message.schema';
 
 @Module({
   imports: [
@@ -37,6 +39,10 @@ import { PlayerGuessService } from 'src/modules/player-guess/player-guess.servic
         name: ModuleNames.PLAYER_GUESS,
         schema: PlayerGuessSchema,
       },
+      {
+        name: ModuleNames.MESSAGE,
+        schema: MessageSchema,
+      },
     ]),
   ],
   controllers: [ApiGameController],
@@ -46,6 +52,7 @@ import { PlayerGuessService } from 'src/modules/player-guess/player-guess.servic
     GamePlayerService,
     RoundService,
     PlayerGuessService,
+    MessageService,
   ],
 })
 export class ApiGameModule {}

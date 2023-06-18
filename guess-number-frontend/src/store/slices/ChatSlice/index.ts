@@ -20,7 +20,7 @@ export const chatSlice = createSlice({
     state.messages = newMessages
    },
    setMessages: (state,action)=>{
-    state.messages = action.payload
+    state.messages = (action.payload as MessageResponse[]).reverse()
    },
  
   },

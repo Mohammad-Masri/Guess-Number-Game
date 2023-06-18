@@ -17,6 +17,9 @@ import {
   StartNewRoundParamsInput,
 } from './dto/StartNewRound.dto';
 import { GamePlayerService } from 'src/modules/game-player/game-player.service';
+import { MessageResponse } from 'src/modules/message/message.dto';
+import { GetGameMessagesParamsInput } from './dto/GetGameMessages.dto';
+import { MessageService } from 'src/modules/message/message.service';
 
 @Controller('game')
 @ApiTags('Game')
@@ -25,6 +28,7 @@ export class ApiGameController {
     private readonly gameService: GameService,
     private readonly playerService: PlayerService,
     private readonly gamePlayerService: GamePlayerService,
+    private readonly messageService: MessageService,
   ) {}
 
   @Post('/')
@@ -98,5 +102,26 @@ export class ApiGameController {
     const game_response = await this.gameService.makeGameResponse(game);
 
     return game_response;
+  }
+
+  @Get('/:game_id/message')
+  @ApiOperation({
+    summary: 'get game messages',
+    description: '',
+  })
+  @ApiOkResponse({
+    description: 'get game messages success',
+    type: MessageResponse,
+    isArray: true,
+  })
+  async getGameMessages(@Param() params: GetGameMessagesParamsInput) {
+    const game = await this.gameService.checkFindByGameId(params.game_id);
+
+    const messages = await this.messageService.findAllInGame(game.game_id);
+    const messages_response = await this.messageService.makeMessagesResponse(
+      messages,
+    );
+
+    return messages_response;
   }
 }
