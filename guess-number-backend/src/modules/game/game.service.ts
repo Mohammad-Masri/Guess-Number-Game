@@ -88,6 +88,16 @@ export class GameService {
       all_players_in_game_response,
     );
 
-    return new GameResponse(you_player_response, current_round_response);
+    const players_result =
+      await this.gamePlayerService.makePlayersResultInGameResponse(
+        game,
+        all_players_in_game_response,
+      );
+
+    return new GameResponse(
+      you_player_response,
+      current_round_response,
+      players_result,
+    );
   }
 }

@@ -6,6 +6,8 @@ import { Model } from 'mongoose';
 import IGamePlayer from './game-player.interface';
 import IPlayer from '../player/player.interface';
 import IGame from '../game/game.interface';
+import { PlayerResponse } from '../player/player.dto';
+import { PlayerResultInGameResponse } from './game-player.dto';
 
 @Injectable()
 export class GamePlayerService {
@@ -26,5 +28,34 @@ export class GamePlayerService {
   async getHumanPlayerInGame(game: IGame) {
     const player = game.players.find((p) => p.player.type == PlayerTypes.HUMAN);
     return player;
+  }
+
+  async makePlayerResultInGameResponse(game: IGame, player: PlayerResponse) {
+    const game_player = game.players.find((p) => p.player.id + '' == player.id);
+    return new PlayerResultInGameResponse(game_player, player);
+  }
+
+  async makePlayersResultInGameResponse(
+    game: IGame,
+    players: PlayerResponse[],
+  ) {
+    const game_players_result: PlayerResultInGameResponse[] = [];
+    for (let i = 0; i < players.length; i++) {
+      const player = players[i];
+      const game_player_result = await this.makePlayerResultInGameResponse(
+        game,
+        player,
+      );
+      // sort insert
+      const index = game_players_result.findIndex(
+        (gpr) => gpr.rank > game_player_result.rank,
+      );
+      if (index === -1) {
+        game_players_result.push(game_player_result);
+      } else {
+        game_players_result.splice(index, 0, game_player_result);
+      }
+    }
+    return game_players_result;
   }
 }
