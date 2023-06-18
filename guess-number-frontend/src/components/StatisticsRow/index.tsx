@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import StatisticsCard from "../StatisticsCard";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
@@ -20,6 +20,17 @@ export default function StatisticsRow() {
     roundStatus == RoundStatuses.RUNNING ? selectOldGame : selectGame
   );
   const youPlayer = game != null ? game.you : null;
+
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTime = makeTimeFormat(getCurrentTime(), "HH:mm");
+      setTime(currentTime);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Grid
@@ -43,7 +54,7 @@ export default function StatisticsRow() {
       </Grid>
       <Grid item xs={4}>
         <StatisticsCard
-          label={makeTimeFormat(getCurrentTime())}
+          label={time}
           icon={<AccessTimeIcon color="primary" fontSize="large" />}
         />
       </Grid>

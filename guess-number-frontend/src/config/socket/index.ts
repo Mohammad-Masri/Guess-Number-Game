@@ -38,7 +38,6 @@ export class SocketHandler {
         () => {}
       );
       this.clientSocket.on(GameSocketEventNames.MESSAGE_SENDED, (data) => {
-        console.log("message received\n", data);
         this.dispatch(pushNewMessage(data));
       });
     }

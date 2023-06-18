@@ -8,7 +8,6 @@ export default function MessagesCard() {
   const [counter, setCounter] = useState<number>(1);
 
   const messages = useSelector(selectMessages);
-  console.log("messages\n", messages);
   const chatContainerRef = useRef<any>(null);
 
   useEffect(() => {
