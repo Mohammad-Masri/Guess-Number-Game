@@ -2,10 +2,14 @@ import React from "react";
 import { Grid } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import Table, { TableColumn } from "../Table";
-import { TotalResult } from "../../dto/TotalResult";
 import { useSelector } from "react-redux";
-import { selectGame } from "../../store/slices/GameSlice";
+import {
+  selectGame,
+  selectOldGame,
+  selectRoundStatus,
+} from "../../store/slices/GameSlice";
 import { PlayerResponse } from "../../dto/Player";
+import { RoundStatuses } from "../../dto/Game";
 export default function RankingTable() {
   const columns: TableColumn[] = [
     { id: "rank", label: "Rank" },
@@ -23,7 +27,11 @@ export default function RankingTable() {
     },
   ];
 
-  const game = useSelector(selectGame);
+  const roundStatus = useSelector(selectRoundStatus);
+
+  const game = useSelector(
+    roundStatus == RoundStatuses.RUNNING ? selectOldGame : selectGame
+  );
   const playersResult = game != null ? game.players_result : [];
 
   return (

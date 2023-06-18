@@ -6,10 +6,19 @@ import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { getCurrentTime, makeTimeFormat } from "../../helpers/moment";
 import { useSelector } from "react-redux";
-import { selectGame } from "../../store/slices/GameSlice";
+import {
+  selectGame,
+  selectOldGame,
+  selectRoundStatus,
+} from "../../store/slices/GameSlice";
+import { RoundStatuses } from "../../dto/Game";
 
 export default function StatisticsRow() {
-  const game = useSelector(selectGame);
+  const roundStatus = useSelector(selectRoundStatus);
+
+  const game = useSelector(
+    roundStatus == RoundStatuses.RUNNING ? selectOldGame : selectGame
+  );
   const youPlayer = game != null ? game.you : null;
 
   return (

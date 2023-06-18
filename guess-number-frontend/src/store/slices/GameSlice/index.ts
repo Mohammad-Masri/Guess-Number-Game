@@ -6,6 +6,7 @@ export interface GameState {
   roundSpeed: number
   roundStatus: string
   gameStatus: string
+  oldGame:GameResponse|null
   game:GameResponse|null
 }
 
@@ -13,6 +14,7 @@ const initialState: GameState = {
   roundSpeed: 1,
   roundStatus: RoundStatuses.PREPARING ,
   gameStatus: GameStatuses.PREPARING ,
+  oldGame:null,
   game:null
   
 }
@@ -22,6 +24,11 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     setGame: (state,action) => {
+
+      state.oldGame = state.game
+      if(state.oldGame == null){
+        state.oldGame = action.payload
+      }
 
       state.game = action.payload
       if(state.game != null){
@@ -46,6 +53,7 @@ export const gameSlice = createSlice({
 export const { setRoundSpeed,setRoundStatus,setGameStatus,setGame } = gameSlice.actions
 
 export const selectGame = (state:any) => (state.game as GameState).game
+export const selectOldGame = (state:any) => (state.game as GameState).oldGame
 export const selectRoundSpeed = (state:any) => (state.game as GameState).roundSpeed
 export const selectRoundStatus = (state:any) => (state.game as GameState).roundStatus
 export const selectGameStatus = (state:any) => (state.game as GameState).gameStatus

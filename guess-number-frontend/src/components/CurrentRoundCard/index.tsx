@@ -11,8 +11,12 @@ import {
 } from "../../dto/RoundResult";
 import { RoundStatuses } from "../../dto/Game";
 
-const getRowColor = (row: RoundPlayerResultResponse) => {
+const getRowColor = (row: RoundPlayerResultResponse, roundStatus: string) => {
   let color = "#000";
+  if (roundStatus == RoundStatuses.RUNNING) {
+    return color;
+  }
+
   switch (row.status) {
     case PlayerGuessStatuses.WIN: {
       color = "#44ed15";
@@ -32,14 +36,12 @@ export default function CurrentRoundCard() {
   const game = useSelector(selectGame);
   const roundStatus = useSelector(selectRoundStatus);
 
-  console.log("roundStatus: ", roundStatus);
-
   const columns: TableColumn[] = [
     {
       id: "player",
       label: "Name",
       cell: (value: PlayerResponse, row: RoundPlayerResultResponse) => (
-        <div style={{ color: getRowColor(row) }}>
+        <div style={{ color: getRowColor(row, roundStatus) }}>
           {value.is_you ? "You" : value.username}
         </div>
       ),
@@ -48,7 +50,7 @@ export default function CurrentRoundCard() {
       id: "points",
       label: "Points",
       cell: (value: number, row: RoundPlayerResultResponse) => (
-        <div style={{ color: getRowColor(row) }}>
+        <div style={{ color: getRowColor(row, roundStatus) }}>
           {roundStatus == RoundStatuses.RUNNING ? value : row.score}
         </div>
       ),
@@ -57,7 +59,7 @@ export default function CurrentRoundCard() {
       id: "multiplier",
       label: "Multiplier",
       cell: (value: number, row: RoundPlayerResultResponse) => (
-        <div style={{ color: getRowColor(row) }}>{value}</div>
+        <div style={{ color: getRowColor(row, roundStatus) }}>{value}</div>
       ),
     },
   ];

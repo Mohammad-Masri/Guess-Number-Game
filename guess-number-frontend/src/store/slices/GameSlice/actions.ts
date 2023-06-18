@@ -35,3 +35,24 @@ export const startNewGame = (
       handleServerError(error);
     });
 };
+
+export const startNewRound = (
+  dispatch: any,
+  game_id: string,
+  points: number,
+  multiplier: number,
+  onSuccess: () => void = () => {}
+) => {
+  axiosInstance
+    .post(`${SERVER_URL}/api/game/${game_id}/round`, {
+      points,
+      multiplier,
+    })
+    .then((res) => {
+      dispatch(setGame(res.data));
+      onSuccess();
+    })
+    .catch((error) => {
+      handleServerError(error);
+    });
+};

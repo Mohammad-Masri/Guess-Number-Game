@@ -86,6 +86,8 @@ export default function MultiplierChart({}: Props) {
           setState((prevState: any) => {
             return {
               ...prevState,
+              XAxisValues: [],
+              YAxisValues: [],
               counter: 0,
             };
           });

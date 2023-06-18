@@ -134,7 +134,7 @@ export class GameService {
         if (player_guess.multiplier <= round_multiplier) {
           const score = player_guess.points * player_guess.multiplier;
           game_player.points += score;
-          game_player.score = score;
+          game_player.score += score;
         }
       }
     }

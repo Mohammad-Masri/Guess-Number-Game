@@ -10,7 +10,10 @@ import {
   setRoundStatus,
 } from "../../store/slices/GameSlice";
 import { RoundStatuses } from "../../dto/Game";
+import { useParams } from "react-router-dom";
+import { startNewRound } from "../../store/slices/GameSlice/actions";
 export default function RoundMenu() {
+  const params = useParams();
   const [points, setPoints] = useState<number>(50);
   const [multiplier, setMultiplier] = useState<number>(1);
 
@@ -18,7 +21,9 @@ export default function RoundMenu() {
   const dispatch = useDispatch();
 
   const handleClickStartButton = () => {
-    dispatch(setRoundStatus(RoundStatuses.RUNNING));
+    startNewRound(dispatch, params.id + "", points, multiplier, () => {
+      dispatch(setRoundStatus(RoundStatuses.RUNNING));
+    });
   };
   return (
     <Grid
