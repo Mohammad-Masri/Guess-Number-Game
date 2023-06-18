@@ -44,8 +44,10 @@ export default function MultiplierChart({}: Props) {
   const game = useSelector(selectGame);
   const roundMultiplierValue =
     game != null
-      ? game.current_round.round_multiplier != null
-        ? game.current_round.round_multiplier
+      ? game.current_round != null
+        ? game.current_round.round_multiplier != null
+          ? game.current_round.round_multiplier
+          : 0
         : 0
       : 0;
   const chartValues = generatePointsUntilReachThisXValue(roundMultiplierValue);
