@@ -1,0 +1,17 @@
+.number-input-label {
+  text-align: center;
+  color: #6c7180;
+  font-size: xx-small;
+}
+
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.number-input {
+  width: 100%;
+  color: #fff;
+  background-color: #0f1416;
+  -moz-appearance: textfield;
+}
